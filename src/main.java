@@ -10,7 +10,16 @@ import java.util.Scanner;
 
 public class main {
 public static void DeletesContact(Path filepath) throws IOException{
-    List<String> delete =
+    List<String> contactList = Files.readAllLines(filepath);
+    Scanner scan = new Scanner(System.in);
+    System.out.println("What contact do you want to delete: ");
+    String input = scan.nextLine();
+
+    for (String line : contactList){
+        if(contactList.contains(input)){
+
+        }
+    }
 }
 
 
