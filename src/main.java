@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class main {
+public static void DeletesContact(Path filepath) throws IOException{
+    List<String> delete =
+}
+
+
     public static void PrintContacts(Path filepath) throws IOException {
         List<String> contactList = Files.readAllLines(filepath);
 
@@ -23,27 +28,32 @@ public class main {
 
         Scanner scanner = new Scanner(System.in);
         String input;
-        String data = "";
+        String data;
         do {
 
             System.out.println("What is your full name?");
             input = scanner.nextLine();
-            data = input;
+            data =input;
 
+            if (lines.isEmpty()){
+                data = input;
+                System.out.println("What is your phone number?");
+                input = scanner.nextLine();
+                data += " " + input;
+                newList.add(data);
+            }else {
+                for (String line : lines) {
+                    if (line.contains(input)) {
+                        System.out.println("That name is already in your contacts");
+                        newList.add(data);
+                    } else {
+                        System.out.println("What is your phone number?");
+                        input = scanner.nextLine();
+                        data += " " + input;
+                        newList.add(data);
+                    }
 
-
-            for (String line : lines) {
-                if (line.contains(data)) {
-                    System.out.println("That name is already in your contacts");
-//                    newList.add(data);
-                    continue;
                 }
-                    System.out.println("What is your phone number?");
-                    input = scanner.nextLine();
-                    data += " " + input;
-                    newList.add(data);
-
-
             }
 
             System.out.println("Would you like to add another contact?[y/n]");
@@ -55,36 +65,58 @@ public class main {
 
 
     public static void main(String[] args) throws IOException {
-        String directory="ContactList";
-        String filename="contacts.txt";
+        String directory = "ContactList";
+        String filename = "contacts.txt";
 
-        Path dataDirectory= Paths.get(directory);
-        Path dataFile=Paths.get(directory,filename);
+        Path dataDirectory = Paths.get(directory);
+        Path dataFile = Paths.get(directory, filename);
 
-        if(Files.notExists(dataDirectory)){
+        if (Files.notExists(dataDirectory)) {
             Files.createDirectories(dataDirectory);
         }
 
-        if(!Files.exists(dataFile)){
+        if (!Files.exists(dataFile)) {
             Files.createFile(dataFile);
         }
 
-
-
-
-
-
-//        System.out.println(data);
-//        contacts.add(data);
-        List<String> people = new ArrayList<>();
-
-
         List<String> contacts = new ArrayList<>();
-        Path filepath = Paths.get(directory,filename);
-        contacts = AddContacts(filepath, contacts);
+        Path filepath = Paths.get(directory, filename);
 
-        Files.write(filepath,contacts);
-        PrintContacts(filepath);
+        Scanner scan = new Scanner(System.in);
+        String inputs;
+        do {
+
+            System.out.println("1. View contacts.\n" +
+                    "2. Add a new contact.\n" +
+                    "3. Search a contact by name.\n" +
+                    "4. Delete an existing contact.\n" +
+                    "5. Exit.\n" +
+                    "Enter an option (1, 2, 3, 4 or 5):");
+            inputs = scan.nextLine();
+            switch (inputs) {
+                case "1":
+                    PrintContacts(filepath);
+                    break;
+                case "2":
+                    contacts = AddContacts(filepath, contacts);
+                    Files.write(filepath, contacts);
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                case "5": inputs = "-1";
+                    break;
+                default:
+                    System.out.println("Not one of the numbers, Try again");
+            }
+        }while(!inputs.equals("-1"));
+
+//        contacts = AddContacts(filepath, contacts);
+//        Files.write(filepath, contacts);
+
+
+
 
     }
 }
