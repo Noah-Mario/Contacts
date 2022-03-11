@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.lang.String;
 
 public class main {
     public static void searchContact(Path filepath) throws IOException {
@@ -47,7 +48,7 @@ public class main {
 
     public static List<String> AddContacts(Path filepath) throws IOException {
         List<String> contactList = Files.readAllLines(filepath);
-        List<String> newList = new ArrayList<>();
+//        List<String> newList = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
         String input;
@@ -67,11 +68,8 @@ public class main {
         } else {
             int num = 0;
             for (String line : contactList)
-//            for (int i = 0; i < contactList.size(); i++)
             {
                 num++;
-                System.out.println(line);
-                System.out.println(num);
                 if (line.contains(input) ) {
 
                     System.out.println("That name is already in your contacts");
@@ -89,18 +87,16 @@ public class main {
                         contactList.add(data);
                         System.out.println(line + " Was replaced in your contacts with: " + data);
                        break;
+                    }else{
+                        break;
                     }
                 }else if (num == contactList.size()){
 
                     System.out.println("What is your phone number?");
                     input = scanner.nextLine();
-                        for (int i =0; i < input.length(); i++){
-//                            System.out.println(input.charAt(i));
-                            if (i == 2 ){
-                                System.out.println(input.charAt(i) + "-");
-                            }
-                        }
-                    data += " " + input;
+                    String i = input;
+                    String j = i.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+                    data += " " + j;
                     contactList.add(data);
                     break;
                 }
