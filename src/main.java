@@ -48,7 +48,7 @@ public class main {
 
     public static List<String> AddContacts(Path filepath) throws IOException {
         List<String> contactList = Files.readAllLines(filepath);
-//        List<String> newList = new ArrayList<>();
+
 
         Scanner scanner = new Scanner(System.in);
         String input;
@@ -82,7 +82,9 @@ public class main {
                         data = input;
                         System.out.println("Change the number to: ");
                         input = scanner.nextLine();
-                        data += " " + input;
+                        String i = input;
+                        String j = i.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+                        data += " " + j;
                         contactList.remove(line);
                         contactList.add(data);
                         System.out.println(line + " Was replaced in your contacts with: " + data);
