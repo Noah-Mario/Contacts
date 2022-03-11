@@ -9,68 +9,83 @@ import java.util.List;
 import java.util.Scanner;
 
 public class main {
-public static void DeletesContact(Path filepath) throws IOException{
+    public static void searchContact(Path filepath) throws IOException{
+        List<String> contactList = Files.readAllLines(filepath);
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Search for a contact: ");
+        String name = scan.nextLine();
+
+        for (String line : contactList) {
+            if (line.contains(name)) {
+                System.out.println("here's the name and number: " + line);
+            }
+        }
+    }
+
+public static List<String> DeletesContact(Path filepath) throws IOException{
     List<String> contactList = Files.readAllLines(filepath);
+    List<String> newList = new ArrayList<>();
     Scanner scan = new Scanner(System.in);
     System.out.println("What contact do you want to delete: ");
     String input = scan.nextLine();
 
     for (String line : contactList){
-        if(contactList.contains(input)){
-
+        if(line.contains(input)) {
+            System.out.println("this contact has been removed");
+        }else {
+            newList.add(line);
         }
-    }
+    }return newList;
 }
 
 
     public static void PrintContacts(Path filepath) throws IOException {
         List<String> contactList = Files.readAllLines(filepath);
-
         for (int i = 0; i < contactList.size(); i += 1) {
             System.out.println((i + 1) + ": " + contactList.get(i));
         }
     }
 
-    public static List<String> AddContacts(Path filepath, List<String> contacts ) throws IOException{
-        List<String> lines = Files.readAllLines(filepath);
-        List<String> newList = new ArrayList<>();
+//    public static List<String> AddContacts(Path filepath, List<String> contacts ) throws IOException{
+//        List<String> contactList = Files.readAllLines(filepath);
+//        List<String> newList = new ArrayList<>();
+//
+//        Scanner scanner = new Scanner(System.in);
+//        String input;
+//        String data;
+//
+//            System.out.println("What is your full name?");
+//            input = scanner.nextLine();
+//            data =input;
+//
+//            if (contactList.isEmpty()){
+//                data = input;
+//                System.out.println("What is your phone number?");
+//                input = scanner.nextLine();
+//                data += " " + input;
+//                newList.add(data);
+//            }else {
+//                for (String line : contactList) {
+//                    if (line.contains(input)) {
+//                        System.out.println("That name is already in your contacts");
+//                        newList.add(data);
+//                    } else {
+//                        System.out.println("What is your phone number?");
+//                        input = scanner.nextLine();
+////                        for (int i =0; i < input.length(); i++){
+////                            System.out.println(i);
+////                        }
+//                        data += " " + input;
+//                        newList.add(data);
+//                        break;
+//                    }
+//
+//                }
+//            }
+//            return newList;
+//    }
 
-        Scanner scanner = new Scanner(System.in);
-        String input;
-        String data;
-        do {
-
-            System.out.println("What is your full name?");
-            input = scanner.nextLine();
-            data =input;
-
-            if (lines.isEmpty()){
-                data = input;
-                System.out.println("What is your phone number?");
-                input = scanner.nextLine();
-                data += " " + input;
-                newList.add(data);
-            }else {
-                for (String line : lines) {
-                    if (line.contains(input)) {
-                        System.out.println("That name is already in your contacts");
-                        newList.add(data);
-                    } else {
-                        System.out.println("What is your phone number?");
-                        input = scanner.nextLine();
-                        data += " " + input;
-                        newList.add(data);
-                    }
-
-                }
-            }
-
-            System.out.println("Would you like to add another contact?[y/n]");
-            input = scanner.nextLine();
-
-        }while(input.equalsIgnoreCase("y"));
-                return newList;
-    }
+    public
 
 
     public static void main(String[] args) throws IOException {
@@ -110,9 +125,11 @@ public static void DeletesContact(Path filepath) throws IOException{
                     contacts = AddContacts(filepath, contacts);
                     Files.write(filepath, contacts);
                     break;
-                case "3":
+                case "3": searchContact(filepath);
                     break;
                 case "4":
+                    contacts = DeletesContact(filepath);
+                    Files.write(filepath, contacts);
                     break;
                 case "5": inputs = "-1";
                     break;
