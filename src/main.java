@@ -65,10 +65,12 @@ public class main {
             data += " " + input;
             contactList.add(data);
         } else {
-
-            for (String line : contactList) {
-
-                if (!line.contains(input)) {
+            int num = 0;
+            for (String line : contactList)
+//            for (int i = 0; i < contactList.size(); i++)
+            { num++;
+                System.out.println(line);
+                if (line.contains(input) ) {
 
                     System.out.println("That name is already in your contacts");
                     System.out.println("Do you want to overwrite it? (Y/N)");
@@ -81,18 +83,21 @@ public class main {
                         System.out.println("Change the number to: ");
                         input = scanner.nextLine();
                         data += " " + input;
+                        contactList.remove(line);
                         contactList.add(data);
-                        break;
-                    }else{
-                        break;
+                        System.out.println(line + " Was replaced in your contacts with: " + data);
+                       break;
                     }
-                }else {
+                }else if (line.indexOf(num) > contactList.size()){
 
                     System.out.println("What is your phone number?");
                     input = scanner.nextLine();
-//                        for (int i =0; i < input.length(); i++){
-//                            System.out.println(i);
-//                        }
+                        for (int i =0; i < input.length(); i++){
+//                            System.out.println(input.charAt(i));
+                            if (i == 2 ){
+                                System.out.println(input.charAt(i) + "-");
+                            }
+                        }
                     data += " " + input;
                     contactList.add(data);
                     break;
