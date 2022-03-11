@@ -2,14 +2,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class main {
-    public static void searchContact(Path filepath) throws IOException{
+    public static void searchContact(Path filepath) throws IOException {
         List<String> contactList = Files.readAllLines(filepath);
         Scanner scan = new Scanner(System.in);
         System.out.println("Search for a contact: ");
@@ -22,21 +20,22 @@ public class main {
         }
     }
 
-public static List<String> DeletesContact(Path filepath) throws IOException{
-    List<String> contactList = Files.readAllLines(filepath);
-    List<String> newList = new ArrayList<>();
-    Scanner scan = new Scanner(System.in);
-    System.out.println("What contact do you want to delete: ");
-    String input = scan.nextLine();
+    public static List<String> DeletesContact(Path filepath) throws IOException {
+        List<String> contactList = Files.readAllLines(filepath);
+        List<String> newList = new ArrayList<>();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("What contact do you want to delete: ");
+        String input = scan.nextLine();
 
-    for (String line : contactList){
-        if(line.contains(input)) {
-            System.out.println("this contact has been removed");
-        }else {
-            newList.add(line);
+        for (String line : contactList) {
+            if (line.contains(input)) {
+                System.out.println("this contact has been removed");
+            } else {
+                newList.add(line);
+            }
         }
-    }return newList;
-}
+        return newList;
+    }
 
 
     public static void PrintContacts(Path filepath) throws IOException {
@@ -46,46 +45,64 @@ public static List<String> DeletesContact(Path filepath) throws IOException{
         }
     }
 
-//    public static List<String> AddContacts(Path filepath, List<String> contacts ) throws IOException{
-//        List<String> contactList = Files.readAllLines(filepath);
-//        List<String> newList = new ArrayList<>();
-//
-//        Scanner scanner = new Scanner(System.in);
-//        String input;
-//        String data;
-//
-//            System.out.println("What is your full name?");
-//            input = scanner.nextLine();
-//            data =input;
-//
-//            if (contactList.isEmpty()){
-//                data = input;
-//                System.out.println("What is your phone number?");
-//                input = scanner.nextLine();
-//                data += " " + input;
-//                newList.add(data);
-//            }else {
-//                for (String line : contactList) {
-//                    if (line.contains(input)) {
-//                        System.out.println("That name is already in your contacts");
-//                        newList.add(data);
-//                    } else {
-//                        System.out.println("What is your phone number?");
-//                        input = scanner.nextLine();
-////                        for (int i =0; i < input.length(); i++){
-////                            System.out.println(i);
-////                        }
-//                        data += " " + input;
-//                        newList.add(data);
-//                        break;
-//                    }
-//
-//                }
-//            }
-//            return newList;
-//    }
+    public static List<String> AddContacts(Path filepath) throws IOException {
+        List<String> contactList = Files.readAllLines(filepath);
+        List<String> newList = new ArrayList<>();
 
-    public
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        String data;
+
+        System.out.println("What is your full name?");
+        input = scanner.nextLine();
+        data = input;
+
+        if (contactList.isEmpty()) {
+
+            data = input;
+            System.out.println("What is your phone number?");
+            input = scanner.nextLine();
+            data += " " + input;
+            contactList.add(data);
+        } else {
+
+            for (String line : contactList) {
+
+                if (!line.contains(input)) {
+
+                    System.out.println("That name is already in your contacts");
+                    System.out.println("Do you want to overwrite it? (Y/N)");
+                    input = scanner.nextLine();
+                    if (input.equalsIgnoreCase("y")) {
+
+                        System.out.println("Change the name to: ");
+                        input = scanner.nextLine();
+                        data = input;
+                        System.out.println("Change the number to: ");
+                        input = scanner.nextLine();
+                        data += " " + input;
+                        contactList.add(data);
+                        break;
+                    }else{
+                        break;
+                    }
+                }else {
+
+                    System.out.println("What is your phone number?");
+                    input = scanner.nextLine();
+//                        for (int i =0; i < input.length(); i++){
+//                            System.out.println(i);
+//                        }
+                    data += " " + input;
+                    contactList.add(data);
+                    break;
+                }
+
+
+            }
+        }
+        return contactList;
+    }
 
 
     public static void main(String[] args) throws IOException {
@@ -122,26 +139,23 @@ public static List<String> DeletesContact(Path filepath) throws IOException{
                     PrintContacts(filepath);
                     break;
                 case "2":
-                    contacts = AddContacts(filepath, contacts);
+                    contacts = AddContacts(filepath);
                     Files.write(filepath, contacts);
                     break;
-                case "3": searchContact(filepath);
+                case "3":
+                    searchContact(filepath);
                     break;
                 case "4":
                     contacts = DeletesContact(filepath);
                     Files.write(filepath, contacts);
                     break;
-                case "5": inputs = "-1";
+                case "5":
+                    inputs = "-1";
                     break;
                 default:
                     System.out.println("Not one of the numbers, Try again");
             }
-        }while(!inputs.equals("-1"));
-
-//        contacts = AddContacts(filepath, contacts);
-//        Files.write(filepath, contacts);
-
-
+        } while (!inputs.equals("-1"));
 
 
     }
