@@ -68,8 +68,10 @@ public class main {
             int num = 0;
             for (String line : contactList)
 //            for (int i = 0; i < contactList.size(); i++)
-            { num++;
+            {
+                num++;
                 System.out.println(line);
+                System.out.println(num);
                 if (line.contains(input) ) {
 
                     System.out.println("That name is already in your contacts");
@@ -88,7 +90,7 @@ public class main {
                         System.out.println(line + " Was replaced in your contacts with: " + data);
                        break;
                     }
-                }else if (line.indexOf(num) > contactList.size()){
+                }else if (num == contactList.size()){
 
                     System.out.println("What is your phone number?");
                     input = scanner.nextLine();
