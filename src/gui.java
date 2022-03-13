@@ -18,14 +18,14 @@ class Gui extends JFrame implements ActionListener{
     JButton addContactBtn;
     JButton searchBtn;
 
-    JButton[] editBtn = new JButton[10];
-    JButton[] deleteBtn = new JButton[10];
+    JButton[] editBtn = new JButton[total];
+    JButton[] deleteBtn = new JButton[total];
 
     JTextField searchBar;
 
     int index;
 
-    JLabel[] text = new JLabel[10];
+    JTextField[] text = new JTextField[total];
 
 
     @Override
@@ -92,7 +92,7 @@ class Gui extends JFrame implements ActionListener{
 
         for (int i = 0; i < contacts.length; i++) {
 
-            text[i] = new JLabel(contacts[i]);
+            text = new JTextField("hello")[10];
             text[i].setVisible(false);
             this.add(text[i]);
 

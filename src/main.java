@@ -156,10 +156,10 @@ public class main {
         }
 
         /*========test======*/
-/*        Path filePath = Paths.get(directory, filename);
+        Path filePath = Paths.get(directory, filename);
         PrintContacts(filePath);
         Gui gui = new Gui(contactsArr);
-        gui.setVisible(true);*/
+        gui.setVisible(true);
 
 
 
