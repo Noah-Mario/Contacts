@@ -1,43 +1,29 @@
-/*
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+import java.io.IOException;
 
-class Gui extends JFrame implements ActionListener{
-
-    */
-/*for absolute values*//*
-
-*/
-/*    final int width = 100;
-    final int height = 40;
-    final int x = 50;
-    final int y = 50;*//*
-
-
-    int total;
+class Gui extends JFrame implements ActionListener {
+    int numberOfContacts = ContactCtrl.scanContacts(main.filepath).size();
 
     JButton displayContactBtn;
     JButton addContactBtn;
     JButton searchBtn;
 
-    JButton[] editBtn = new JButton[total];
-    JButton[] deleteBtn = new JButton[total];
+    JButton[] editBtn = new JButton[numberOfContacts];
+    JButton[] deleteBtn = new JButton[numberOfContacts];
 
     JTextField searchBar;
 
-    int index;
-
-    JTextField[] text = new JTextField[total];
+    JLabel[] text = new JLabel[numberOfContacts];
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == displayContactBtn) {
             System.out.println("display");
-            for (int i = 0; i < total; i++) {
+            for (int i = 0; i < numberOfContacts; i++) {
                 text[i].setVisible(true);
                 editBtn[i].setVisible(true);
                 deleteBtn[i].setVisible(true);
@@ -46,10 +32,21 @@ class Gui extends JFrame implements ActionListener{
             System.out.println("added Contact");
         } else if (e.getSource() == searchBtn) {
             String value = searchBar.getText();
-            System.out.println(value);
+            try {
+                String foundName = ContactCtrl.searchContact(main.filepath, value);
+                for(int i = 0; i < numberOfContacts; i++) {
+                    if(text[i].getText().contains(foundName)) {
+                        text[i].setVisible(true);
+                    } else {
+                        text[i].setVisible(false);
+                    }
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
 
-        for(int i = 0; i < total; i++) {
+        for (int i = 0; i < numberOfContacts; i++) {
             if (e.getSource() == editBtn[i]) {
                 JLabel textInput = new JLabel(text[i].getText());
                 String newValue = textInput.getText();
@@ -62,21 +59,21 @@ class Gui extends JFrame implements ActionListener{
         }
     }
 
-    Gui() {
+    Gui() throws IOException {
 
-//        String[] contacts = new String[10];
-//        Arrays.fill(contacts, " Contact");
+        //==========================
+        //convert List to Array
+        String[] contacts = new String[ContactCtrl.scanContacts(main.filepath).size()];
+        ContactCtrl.scanContacts(main.filepath).toArray(contacts);
+        //============================
 
-        total = contacts.length;
-
-        this.setName("Contacts Manager");
+        this.setName("Contacts");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(400, 500);
         this.setLayout(new FlowLayout());
         this.setResizable(false);
 
-        */
-/*===========display btn ==============*//*
+//===========display btn ==============
 
 
         displayContactBtn = new JButton("Display Contacts");
@@ -95,13 +92,11 @@ class Gui extends JFrame implements ActionListener{
         this.add(searchBtn);
         searchBtn.addActionListener(this);
 
-        */
-/*============*//*
+//============
 
-
-        for (int i = 0; i < contacts.length; i++) {
-
-            text = new JTextField("hello")[10];
+        //obtener el numero de contactos de el documento
+        for (int i = 0; i < numberOfContacts; i++) {
+            text[i] = new JLabel(contacts[i]);
             text[i].setVisible(false);
             this.add(text[i]);
 
@@ -117,6 +112,4 @@ class Gui extends JFrame implements ActionListener{
 
         }
     }
-
 }
-*/

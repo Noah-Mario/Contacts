@@ -9,9 +9,11 @@ import java.lang.String;
 
 public class main {
 
+    static String directory = "ContactList";
+    static String filename = "contacts.txt";
+    static Path filepath = Paths.get(directory, filename);
+
     public static void main(String[] args) throws IOException {
-        String directory = "ContactList";
-        String filename = "contacts.txt";
 
         Path dataDirectory = Paths.get(directory);
         Path dataFile = Paths.get(directory, filename);
@@ -25,7 +27,9 @@ public class main {
         }
 
         List<String> contacts = new ArrayList<>();
-        Path filepath = Paths.get(directory, filename);
+
+        Gui g = new Gui();
+        g.setVisible(true);
 
         Scanner scan = new Scanner(System.in);
         String inputs;

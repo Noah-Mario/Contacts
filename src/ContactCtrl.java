@@ -37,6 +37,17 @@ public class ContactCtrl {
         }
     }
 
+    public static String searchContact(Path filepath, String name) throws IOException {
+        List<String> contactList = Files.readAllLines(filepath);
+        String foundName = "";
+        for (String line : contactList) {
+            if (line.contains(name)) {
+                foundName = name;
+            }
+        }
+        return foundName;
+    }
+
     public static List<String> AddContacts(Path filepath) throws IOException {
         List<String> contactList = Files.readAllLines(filepath);
         Scanner scanner = new Scanner(System.in);
@@ -108,4 +119,9 @@ public class ContactCtrl {
             System.out.println((i + 1) + ": " + contactList.get(i));
         }
     }
+
+    public static List<String> scanContacts(Path filepath) throws IOException {
+        return Files.readAllLines(filepath);
+    }
+
 }
