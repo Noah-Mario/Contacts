@@ -1,3 +1,4 @@
+/*
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,11 +7,15 @@ import java.util.Arrays;
 
 class Gui extends JFrame implements ActionListener{
 
-    /*for absolute values*/
+    */
+/*for absolute values*//*
+
+*/
 /*    final int width = 100;
     final int height = 40;
     final int x = 50;
-    final int y = 50;*/
+    final int y = 50;*//*
+
 
     int total;
 
@@ -57,7 +62,7 @@ class Gui extends JFrame implements ActionListener{
         }
     }
 
-    Gui(String[] contacts) {
+    Gui() {
 
 //        String[] contacts = new String[10];
 //        Arrays.fill(contacts, " Contact");
@@ -70,7 +75,9 @@ class Gui extends JFrame implements ActionListener{
         this.setLayout(new FlowLayout());
         this.setResizable(false);
 
-        /*===========display btn ==============*/
+        */
+/*===========display btn ==============*//*
+
 
         displayContactBtn = new JButton("Display Contacts");
         this.add(displayContactBtn);
@@ -88,7 +95,9 @@ class Gui extends JFrame implements ActionListener{
         this.add(searchBtn);
         searchBtn.addActionListener(this);
 
-        /*============*/
+        */
+/*============*//*
+
 
         for (int i = 0; i < contacts.length; i++) {
 
@@ -110,3 +119,4 @@ class Gui extends JFrame implements ActionListener{
     }
 
 }
+*/
