@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.nio.file.Files;
 
 class Gui extends JFrame implements ActionListener {
     int numberOfContacts = ContactCtrl.scanContacts(main.filepath).size();
@@ -35,12 +36,10 @@ class Gui extends JFrame implements ActionListener {
             try {
                 String foundName = ContactCtrl.searchContact(main.filepath, value);
                 for(int i = 0; i < numberOfContacts; i++) {
-                    if(text[i].getText().contains(foundName)) {
-                        text[i].setVisible(true);
-                    } else {
-                        text[i].setVisible(false);
-                    }
+                    text[i].setVisible(text[i].getText().contains(foundName));
                 }
+                searchBar.setText(foundName);
+                searchBar.setEditable(true);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -55,6 +54,13 @@ class Gui extends JFrame implements ActionListener {
                 text[i].setVisible(false);
                 editBtn[i].setVisible(false);
                 deleteBtn[i].setVisible(false);
+
+                try {
+                    main.contacts = ContactCtrl.DeletesContact(main.filepath, text[i].toString());
+                    Files.write(main.filepath, main.contacts);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
@@ -69,7 +75,7 @@ class Gui extends JFrame implements ActionListener {
 
         this.setName("Contacts");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(400, 500);
+        this.setSize(300, 500);
         this.setLayout(new FlowLayout());
         this.setResizable(false);
 

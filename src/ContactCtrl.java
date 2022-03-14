@@ -24,6 +24,21 @@ public class ContactCtrl {
         return newList;
     }
 
+    /*======================================================================*/
+    /*=============================For Gui==================================*/
+    public static List<String> DeletesContact(Path filepath, String input) throws IOException {
+        List<String> contactList = Files.readAllLines(filepath);
+        List<String> newList = new ArrayList<>();
+
+        for (String line : contactList) {
+            if (!line.equals(input)) {
+                newList.add(line);
+                break;
+            }
+        }
+        return newList;
+    }
+
     public static void searchContact(Path filepath) throws IOException {
         List<String> contactList = Files.readAllLines(filepath);
         Scanner scan = new Scanner(System.in);
@@ -37,16 +52,21 @@ public class ContactCtrl {
         }
     }
 
+    /*======================================================================*/
+    /*=============================For Gui==================================*/
     public static String searchContact(Path filepath, String name) throws IOException {
         List<String> contactList = Files.readAllLines(filepath);
         String foundName = "";
         for (String line : contactList) {
             if (line.contains(name)) {
                 foundName = name;
+                break;
             }
         }
         return foundName;
     }
+    /*======================================================================*/
+    /*======================================================================*/
 
     public static List<String> AddContacts(Path filepath) throws IOException {
         List<String> contactList = Files.readAllLines(filepath);
@@ -73,7 +93,7 @@ public class ContactCtrl {
 
                 num++;
 
-                if (line.contains(input) ) {
+                if (line.contains(input)) {
 
                     System.out.println("That name is already in your contacts");
                     System.out.println("Do you want to overwrite it? (Y/N)");
@@ -95,10 +115,10 @@ public class ContactCtrl {
                         System.out.println(line + " Was replaced in your contacts with: " + data);
 
                         break;
-                    }else{
+                    } else {
                         break;
                     }
-                }else if (num == contactList.size()){
+                } else if (num == contactList.size()) {
 
                     System.out.println("What is your phone number?");
                     input = scanner.nextLine();
@@ -113,6 +133,22 @@ public class ContactCtrl {
         return contactList;
     }
 
+    /*======================================================================*/
+    /*=============================For Gui==================================*/
+    public static List<String> AddContacts(Path filepath, String fullName, String phoneNumber) throws IOException {
+        List<String> contactList = Files.readAllLines(filepath);
+        String data;
+        if (contactList.isEmpty()) {
+            data = fullName + " " + phoneNumber;
+            contactList.add(data);
+        } else {
+            String j = phoneNumber.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+            data = fullName + " " + j;
+            contactList.add(data);
+        }
+        return contactList;
+}
+
     public static void PrintContacts(Path filepath) throws IOException {
         List<String> contactList = Files.readAllLines(filepath);
         for (int i = 0; i < contactList.size(); i += 1) {
@@ -120,6 +156,8 @@ public class ContactCtrl {
         }
     }
 
+    /*======================================================================*/
+    /*======================================================================*/
     public static List<String> scanContacts(Path filepath) throws IOException {
         return Files.readAllLines(filepath);
     }

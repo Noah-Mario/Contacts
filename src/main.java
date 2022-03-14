@@ -12,6 +12,7 @@ public class main {
     static String directory = "ContactList";
     static String filename = "contacts.txt";
     static Path filepath = Paths.get(directory, filename);
+    static List<String> contacts = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
 
@@ -25,8 +26,6 @@ public class main {
         if (!Files.exists(dataFile)) {
             Files.createFile(dataFile);
         }
-
-        List<String> contacts = new ArrayList<>();
 
         Gui g = new Gui();
         g.setVisible(true);
