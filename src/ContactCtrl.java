@@ -162,4 +162,17 @@ public class ContactCtrl {
         return Files.readAllLines(filepath);
     }
 
+    public static List<String> edit(Path filepath, String name, String phoneNumber) throws IOException {
+        List<String> contacts = Files.readAllLines(filepath);
+        List<String> updatedContacts = new ArrayList<>();
+        for(int i = 0; i < contacts.size(); i++) {
+            if(contacts.get(i).contains(name)) {
+                updatedContacts.add(name + " " + phoneNumber);
+            } else {
+                updatedContacts.add(updatedContacts.get(i));
+            }
+        }
+        return updatedContacts;
+    }
+
 }

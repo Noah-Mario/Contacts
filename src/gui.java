@@ -12,6 +12,9 @@ class Gui extends JFrame implements ActionListener {
     JButton addContactBtn;
     JButton searchBtn;
 
+    String fullName;
+    String phoneNumber;
+
     JButton[] editBtn = new JButton[numberOfContacts];
     JButton[] deleteBtn = new JButton[numberOfContacts];
 
@@ -30,13 +33,25 @@ class Gui extends JFrame implements ActionListener {
                 deleteBtn[i].setVisible(true);
             }
         } else if (e.getSource() == addContactBtn) {
-            System.out.println("added Contact");
+            fullName = JOptionPane.showInputDialog(this,
+                    "enter full name", null);
+            phoneNumber = JOptionPane.showInputDialog(this,
+                    "enter Phone Number", null);
+            try {
+                main.contacts = ContactCtrl.AddContacts(main.filepath, fullName, phoneNumber);
+                Files.write(main.filepath, main.contacts);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
         } else if (e.getSource() == searchBtn) {
             String value = searchBar.getText();
             try {
                 String foundName = ContactCtrl.searchContact(main.filepath, value);
                 for(int i = 0; i < numberOfContacts; i++) {
                     text[i].setVisible(text[i].getText().contains(foundName));
+                    editBtn[i].setVisible(false);
+                    deleteBtn[i].setVisible(false);
                 }
                 searchBar.setText(foundName);
                 searchBar.setEditable(true);
@@ -48,7 +63,21 @@ class Gui extends JFrame implements ActionListener {
         for (int i = 0; i < numberOfContacts; i++) {
             if (e.getSource() == editBtn[i]) {
                 JLabel textInput = new JLabel(text[i].getText());
-                String newValue = textInput.getText();
+
+                fullName = JOptionPane.showInputDialog(this,
+                        "enter full name", null);
+                phoneNumber = JOptionPane.showInputDialog(this,
+                        "enter Phone Number", null);
+
+                String newValue = fullName + " " + phoneNumber;
+                try {
+                    main.contacts = ContactCtrl.edit(main.filepath, fullName, phoneNumber);
+                    Files.write(main.filepath, main.contacts);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                //needs to scan contacts and re asign that contact
                 text[i].setText(newValue);
             } else if (e.getSource() == deleteBtn[i]) {
                 text[i].setVisible(false);
@@ -75,7 +104,7 @@ class Gui extends JFrame implements ActionListener {
 
         this.setName("Contacts");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 500);
+        this.setSize(230, 500);
         this.setLayout(new FlowLayout());
         this.setResizable(false);
 
